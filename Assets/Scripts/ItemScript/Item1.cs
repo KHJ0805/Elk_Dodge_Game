@@ -7,18 +7,21 @@ using TMPro;
 public class Item1 : MonoBehaviour
 {
     //아이템 지속시간
-    private float item1Duration = 10.0f;
+    //item1Duration == item1LeftTime 이야 제대로 표기됨
+    private float item1Duration = 2.0f;
     private float timer1 = 0f;
+    private float item1LeftTime = 2.0f;
 
     public TextMeshProUGUI textMesh;
+    public TextMeshProUGUI leftTimeText;
 
     void Awake()
     {
-        if (textMesh == null)
-        {
-            textMesh = GetComponentInChildren<TextMeshProUGUI>();
-        }
+        if(textMesh == null)
+            textMesh = GetComponent<TextMeshProUGUI>();
 
+        if(leftTimeText == null)
+            leftTimeText = GetComponent<TextMeshProUGUI>();
     }
 
 
@@ -28,11 +31,16 @@ public class Item1 : MonoBehaviour
         if (GameManager.Instance.isItem1Active)
         {
             timer1 += Time.deltaTime;
+            item1LeftTime -= Time.deltaTime;
+            leftTimeText.text = item1LeftTime.ToString("N2");
+
             if (timer1 >= item1Duration)
             {
                 GameManager.Instance.isItem1Active = false;
                 timer1 -= Time.deltaTime;
                 timer1 = 0f;
+                item1LeftTime = 2.0f;
+                leftTimeText.text = "";
             }
         }
 
