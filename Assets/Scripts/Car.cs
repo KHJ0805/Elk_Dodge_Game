@@ -5,10 +5,10 @@ using UnityEngine;
 public class Car : MonoBehaviour
 {
     float forceGravity = 3.0f;
-
+    public bool isItem1Active;
     Rigidbody2D rb;
 
-    // ÀÚµ¿Â÷°¡ ³ª¿À´Â À§Ä¡
+    // ï¿½Úµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡
     void Start()
     {
         float x = Random.Range(-2.0f, 2.0f);
@@ -25,10 +25,11 @@ public class Car : MonoBehaviour
         }
     }
 
-    // Â÷°¡ °í¶ó´Ï ÂÊÀ¸·Î ÁÖÇà Áß
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
     void Update()
     {
-        //Â÷°¡ È­¸é ¹ÛÀ¸·Î ³ª°¡¸é »èÁ¦
+        isItem1Active = GameManager.Instance.isItem1Active;
+        //ï¿½ï¿½ï¿½ï¿½ È­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         if (transform.position.y < -5.6f)
         {
             Destroy(gameObject);
@@ -54,13 +55,31 @@ public class Car : MonoBehaviour
     }
 
 
-    //Â÷°¡ °í¶ó´Ï(ÇÃ·¹ÀÌ¾î)¸¦ ÃÆÀ» °æ¿ì
-    private void OnCollisionEnter2D(Collision2D collision) 
+    //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½(ï¿½Ã·ï¿½ï¿½Ì¾ï¿½)ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Player")) 
+        if (!isItem1Active)
         {
-            //°ÔÀÓ Á¾·á ¸Þ¼­µå ½ÇÇà
-            GameManager.Instance.GameOver();
+            if (collision.gameObject.CompareTag("Player"))
+            {
+                if (GameManager.Instance.item3Hav >= 1)
+                {
+                    GameManager.Instance.item3Hav -= 1;
+                }
+
+                else
+                {
+                    GameManager.Instance.GameOver();
+                }
+            }
+        }
+
+        else
+        {
+            if (collision.gameObject.CompareTag("Player"))
+            {
+                Destroy(this.gameObject);
+            }
         }
     }
 }
