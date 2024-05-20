@@ -9,7 +9,16 @@ public class Item2 : MonoBehaviour
     private float item2Duration = 5.0f;
     private float timer2 = 0f;
 
+    public TextMeshProUGUI textMesh;
 
+    void Awake()
+    {
+        if (textMesh == null)
+        {
+            textMesh = GetComponentInChildren<TextMeshProUGUI>();
+        }
+
+    }
     // Update is called once per frame
     void Update()
     {
@@ -23,6 +32,7 @@ public class Item2 : MonoBehaviour
                 timer2 = 0f;
             }
         }
+        textMesh.text = $"x{GameManager.Instance.item2Hav}";
     }
 
     public void ITem2Activate()

@@ -93,8 +93,21 @@ public class Car : MonoBehaviour
         {
             if (collision.gameObject.CompareTag("Player"))
             {
-                Destroy(this.gameObject);
+                DestroyCar();
             }
         }
+    }
+
+    private void DestroyCar()
+    {
+        Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        Collider2D collider = GetComponent<Collider2D>();
+        
+        Destroy(collider);
+
+        rb.gravityScale = 2.0f;
+
+        Vector2 initialVelocity = new Vector2(Random.Range(-2.0f,2.0f),Random.Range(6.0f,10.0f));
+        rb.AddForce(initialVelocity, ForceMode2D.Impulse);
     }
 }
