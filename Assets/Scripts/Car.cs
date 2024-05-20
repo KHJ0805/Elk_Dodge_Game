@@ -5,6 +5,7 @@ using UnityEngine;
 public class Car : MonoBehaviour
 {
     float forceGravity = 3.0f;
+    float item2ForceGravity = 0.5f;
     public bool isItem1Active;
     Rigidbody2D rb;
 
@@ -45,12 +46,26 @@ public class Car : MonoBehaviour
     {
         if (transform.position.x < 0.0f && transform.position.x >= -2.0f)
         {
-            rb.AddForce(Vector3.down * forceGravity);
+            if (!GameManager.Instance.isItem2Active)
+            {
+                rb.AddForce(Vector3.down * forceGravity);
+            }
+            else
+            {
+                rb.AddForce(Vector3.down * item2ForceGravity);
+            }
 
         }
         else if (transform.position.x >= 0.0f && transform.position.x <= 2.0f)
         {
-            rb.AddForce(Vector3.up * forceGravity);
+            if (!GameManager.Instance.isItem2Active)
+            {
+                rb.AddForce(Vector3.up * forceGravity);
+            }
+            else
+            {
+                rb.AddForce(Vector3.up * item2ForceGravity);
+            }
         }
     }
 

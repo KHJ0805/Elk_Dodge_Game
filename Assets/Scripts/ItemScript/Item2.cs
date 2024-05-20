@@ -5,7 +5,9 @@ using UnityEngine;
 
 public class Item2 : MonoBehaviour
 {
-    public GameObject[] cars;
+    //아이템 지속시간
+    private float item2Duration = 5.0f;
+    private float timer2 = 0f;
 
 
     // Update is called once per frame
@@ -13,9 +15,13 @@ public class Item2 : MonoBehaviour
     {
         if (GameManager.Instance.isItem2Active)
         {
-
-            DestroyAllCars();
-            GameManager.Instance.isItem2Active = false;
+            timer2 += Time.deltaTime;
+            if (timer2 >= item2Duration)
+            {
+                GameManager.Instance.isItem2Active = false;
+                timer2 -= Time.deltaTime;
+                timer2 = 0f;
+            }
         }
     }
 
@@ -25,19 +31,6 @@ public class Item2 : MonoBehaviour
         {
             GameManager.Instance.item2Hav -= 1;
             GameManager.Instance.isItem2Active = true;
-        }
-    }
-
-    void DestroyAllCars()
-    {
-        Invoke("InvokeDestroyAllCars", 1.0f);
-    }
-
-    void InvokeDestroyAllCars()
-    {
-        foreach (GameObject car in cars)
-        {
-            Destroy(car);
         }
     }
 }
