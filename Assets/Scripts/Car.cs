@@ -9,6 +9,9 @@ public class Car : MonoBehaviour
     public bool isItem1Active;
     Rigidbody2D rb;
 
+    private bool isRotation = false;
+    private float RotateSpeed = 360f;
+
     // �ڵ����� ������ ��ġ
     void Start()
     {
@@ -38,6 +41,11 @@ public class Car : MonoBehaviour
         else if (transform.position.y > 5.6f)
         {
             Destroy(gameObject);
+        }
+
+        if(isRotation == true)
+        {
+            transform.Rotate(Vector3.forward, RotateSpeed * Time.deltaTime);
         }
     }
 
@@ -80,6 +88,7 @@ public class Car : MonoBehaviour
                 if (GameManager.Instance.item3Hav >= 1)
                 {
                     GameManager.Instance.item3Hav -= 1;
+                    DestroyCar();
                 }
 
                 else
@@ -109,5 +118,7 @@ public class Car : MonoBehaviour
 
         Vector2 initialVelocity = new Vector2(Random.Range(-2.0f,2.0f),Random.Range(6.0f,10.0f));
         rb.AddForce(initialVelocity, ForceMode2D.Impulse);
+
+        isRotation = true;
     }
 }

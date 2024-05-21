@@ -18,6 +18,6 @@ public class Item3 : MonoBehaviour
 
     void Update()
     {
-        textMesh.text = $"x{GameManager.Instance.item2Hav}";
+        textMesh.text = $"x{GameManager.Instance.item3Hav}";
     }
 }
